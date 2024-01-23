@@ -1,0 +1,37 @@
+{
+  "name": "orbitron",
+  "version": "1.0.0",
+  "description": "Generator of orbital animations using NASA/JPL Horizons API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mmomtchev/orbitron.git"
+  },
+  "keywords": [
+    "orbits",
+    "animation",
+    "jpl",
+    "horizons",
+    "spacecraft",
+    "trajectory"
+  ],
+  "author": "Momtchil Momtchev <momtchil@momtchev.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mmomtchev/orbitron/issues"
+  },
+  "homepage": "https://github.com/mmomtchev/orbitron#readme",
+  "dependencies": {
+    "@lunisolar/julian": "^0.7.1",
+    "@mmomtchev/ffmpeg": "^1.0.0-rc.1",
+    "commander": "^11.1.0",
+    "magickwand.js": "^1.0.1"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  }
+}
