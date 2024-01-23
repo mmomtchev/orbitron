@@ -4,7 +4,10 @@
   "description": "Generator of orbital animations using NASA/JPL Horizons API",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "prepare": "npx tsc"
+  },
+  "bin": {
+    "orbitron": "./dist/main.js"
   },
   "repository": {
     "type": "git",

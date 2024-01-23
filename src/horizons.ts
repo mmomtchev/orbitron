@@ -4,8 +4,8 @@ import * as crypto from 'node:crypto';
 import { JD } from '@lunisolar/julian';
 
 const horizons_endpoint = `https://ssd.jpl.nasa.gov/api`;
-const horizons_lookup = `${horizons_endpoint}/horizons_lookup.api`
-const horizons_main = `${horizons_endpoint}/horizons.api`
+const horizons_lookup = `${horizons_endpoint}/horizons_lookup.api`;
+const horizons_main = `${horizons_endpoint}/horizons.api`;
 
 export interface LookupItem {
   name: string;
@@ -33,7 +33,7 @@ export async function lookup(s: string) {
   return r as LookupResult;
 }
 
-export async function vectors(req: { center: string; body: string; start: Date; stop: Date; step: string}) {
+export async function vectors(req: { center: string; body: string; start: Date; stop: Date; step: string; }) {
   const url = `${horizons_main}?` +
     `format=text` +
     `&command=${req.body}` +
@@ -53,12 +53,13 @@ export async function vectors(req: { center: string; body: string; start: Date; 
   } catch {
     raw = await fetch(url).then((r) => r.text());
     console.log('retrieved from server');
+    await fs.mkdir(path.resolve(__dirname, '..', 'cache'), { recursive: true });
     await fs.writeFile(path.resolve(__dirname, '..', 'cache', `${digest}.txt`), raw, 'utf-8');
     console.log('saved to cache', digest);
   }
 
   const object = ((raw.match(/Target body name: ([^\{\(\n]+)/) || [])[1] || '???').trim();
-  
+
   const lines = raw.substring(raw.indexOf('$$SOE'), raw.indexOf('$$EOE')).split('\n');
   lines.shift();
   lines.pop();
@@ -67,7 +68,7 @@ export async function vectors(req: { center: string; body: string; start: Date; 
   for (let i = 0; i < lines.length; i += 2) {
     const jd = +lines[i].split(' ')[0];
     const element: EphemItem = { jd, date: new Date(JD.fromJdn(jd).format('YYYY-MM-DDTHH:mm:ssZ')), data: {} };
-    for (const parm of lines[i+1].matchAll(/([A-Za-z]+)\s*=\s*(-?[0-9]+\.[0-9]+E[-+][0-9]+)/g)) {
+    for (const parm of lines[i + 1].matchAll(/([A-Za-z]+)\s*=\s*(-?[0-9]+\.[0-9]+E[-+][0-9]+)/g)) {
       element.data[parm[1]] = +parm[2];
     }
     data.push(element);
