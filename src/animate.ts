@@ -1,4 +1,3 @@
-import * as path from 'node:path';
 import { Magick, MagickCore } from 'magickwand.js';
 import ffmpeg from '@mmomtchev/ffmpeg';
 import { Muxer, VideoEncoder, VideoTransform } from '@mmomtchev/ffmpeg/stream';
@@ -23,20 +22,6 @@ interface Options {
   bodies: string[];
   legend: boolean;
 };
-
-const bodies = [
-  { id: '-31', color: '#a4c639' },
-  { id: '@sun', color: '#fdee00' },
-  { id: '@199', color: '#b2beb5' },
-  { id: '@299', color: '#fdfd96' },
-  { id: '@geocenter', color: '#4997d0' },
-  { id: '@499', color: '#a52a2a' },
-  { id: '@599', color: '#cc5500' },
-  { id: '@699', color: '#536872' },
-  { id: '@799', color: '#99badd' },
-  { id: '@899', color: '#2a52be' },
-  { id: '@999', color: '#efdecd' }
-];
 
 interface Settings {
   opts: Options;
