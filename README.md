@@ -53,7 +53,7 @@ Animate the Apollo-12 S-IVB stage (yes, it is still there) with the Earth as cen
 ```shell
 $ orbitron animate --start 2003-03-01 --stop 2003-09-01    \
   --out apollo-11-s4b.mp4 --days 1 --legend                \
-  --body --998=green                                       \
+  --body -998=green                                        \
   --proj lin --origin earth --body moon 
 ```
 
