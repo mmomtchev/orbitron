@@ -3,25 +3,9 @@ import ffmpeg from '@mmomtchev/ffmpeg';
 import { Muxer, VideoEncoder, VideoTransform } from '@mmomtchev/ffmpeg/stream';
 
 import * as Horizons from './horizons';
-import { Proj, ProjFn, getProjectionFunction } from './projection';
+import { ProjFn, getProjectionFunction } from './projection';
+import { Options } from './options';
 import major from './major-bodies';
-
-ffmpeg.setLogLevel(ffmpeg.AV_LOG_VERBOSE);
-
-interface Options {
-  width: number;
-  height: number;
-  file: string;
-  fps: number;
-  start: Date;
-  stop: Date;
-  step: string;
-  br: number;
-  origin: string;
-  proj: Proj;
-  bodies: string[];
-  legend: boolean;
-};
 
 interface Settings {
   opts: Options;
@@ -82,14 +66,17 @@ async function draw(coordsToPixels: ProjFn,
     }
   }
 
-  drawList.push(...[
-    conf.drawFont,
-    conf.drawPointSize,
-    conf.drawStrokeTransparent,
-    conf.drawWhite,
-    new Magick.DrawableText(conf.lineSize, conf.opts.height - conf.lineSize,
-      `${date.getUTCFullYear()}-${date.getUTCMonth() + 1}-${date.getUTCDate()}`)
-  ]);
+  if (conf.opts.date !== 'off') {
+    drawList.push(...[
+      conf.drawFont,
+      conf.drawPointSize,
+      conf.drawStrokeTransparent,
+      conf.drawWhite,
+      new Magick.DrawableText(conf.lineSize,
+        conf.opts.date === 'bottom' ? conf.opts.height - conf.lineSize : conf.lineSize,
+        `${date.getUTCFullYear()}-${date.getUTCMonth() + 1}-${date.getUTCDate()}`)
+    ]);
+  }
   await image.drawAsync(drawList);
   return image;
 }
@@ -106,7 +93,7 @@ async function legend(image: Magick.Image, conf: Settings, bodies: Body[]) {
       conf.drawPointSize,
       conf.drawStrokeTransparent,
       body.fill,
-      new Magick.DrawableText(conf.opts.width - conf.pointSize * (maxLen + 2) / 12, height, `${body.name}`)
+      new Magick.DrawableText(conf.opts.width - conf.pointSize * maxLen, height, `${body.name}`)
     ]);
     height += conf.lineSize;
   }
@@ -114,7 +101,7 @@ async function legend(image: Magick.Image, conf: Settings, bodies: Body[]) {
 }
 
 export async function animate(opts: Options) {
-  console.log(opts);
+  if (opts.verbose) console.log(opts);
 
   // Initialize the bodies and retrieve Horizons data
   const ephem: Body[] = [];
@@ -128,7 +115,7 @@ export async function animate(opts: Options) {
     if (!color) {
       throw new Error(`No color for body ${body}`);
     }
-    const r = await Horizons.vectors({ center: origin, body: body, start: opts.start, stop: opts.stop, step: opts.step });
+    const r = await Horizons.vectors({ center: origin, body: body, start: opts.start, stop: opts.stop, step: opts.step }, opts);
     if (!r?.data?.length) {
       throw new Error(`Horizons API returned an empty dataset for ${body}`);
     }
@@ -149,19 +136,23 @@ export async function animate(opts: Options) {
   });
   console.log(`Animating\n${ephem.map((b) => `\t${b.name}  :  ${b.color}`).join('\n')}`);
 
+  const image = new Magick.Image(`${opts.width}x${opts.height}`, 'black');
+  const pointSize = opts.pointSize || (opts.width / 16 / 6);
+  Magick.TypeMetric;
   const conf: Settings = {
     opts,
-    pointSize: opts.width / 16,
-    lineSize: opts.height / 36,
+    pointSize,
+    lineSize: pointSize * 2,
     bodySize: Math.round(Math.min(opts.width, opts.height) / 400) || 1,
     drawStrokeTransparent: new Magick.DrawableStrokeColor('transparent'),
     drawFillTransparent: new Magick.DrawableStrokeColor('transparent'),
     drawWhite: new Magick.DrawableFillColor('white'),
-    drawPointSize: new Magick.DrawablePointSize(opts.width / 16 / 6),
-    drawFont: new Magick.DrawableFont('Bitstream Charter', MagickCore.NormalStyle, 400, MagickCore.NormalStretch)
+    drawPointSize: new Magick.DrawablePointSize(pointSize),
+    drawFont: new Magick.DrawableFont(opts.font, MagickCore.NormalStyle, 400, MagickCore.NormalStretch)
   };
 
   // Create the video
+  ffmpeg.setLogLevel(opts.verbose ? ffmpeg.AV_LOG_VERBOSE : ffmpeg.AV_LOG_ERROR);
   const formatIn = new ffmpeg.PixelFormat(ffmpeg.AV_PIX_FMT_RGBA);
   const formatOut = new ffmpeg.PixelFormat(ffmpeg.AV_PIX_FMT_YUV420P);
   const timeBase = new ffmpeg.Rational(1, opts.fps);
@@ -184,7 +175,6 @@ export async function animate(opts: Options) {
   const totalFrames = ephem[0].trajectory.length;
 
   // Create the background and the legend
-  const image = new Magick.Image(`${opts.width}x${opts.height}`, 'black');
   image.magick('rgba');
   image.depth(8);
   image.strokeAntiAlias(true);

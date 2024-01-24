@@ -2,6 +2,7 @@ import * as fs from 'node:fs/promises';
 import * as path from 'node:path';
 import * as crypto from 'node:crypto';
 import { JD } from '@lunisolar/julian';
+import { Options } from './options';
 
 const horizons_endpoint = `https://ssd.jpl.nasa.gov/api`;
 const horizons_lookup = `${horizons_endpoint}/horizons_lookup.api`;
@@ -34,7 +35,7 @@ export async function lookup(s: string) {
   return r as LookupResult;
 }
 
-export async function vectors(req: { center: string; body: string; start: Date; stop: Date; step: string; }) {
+export async function vectors(req: { center: string; body: string; start: Date; stop: Date; step: string; }, opt: Options) {
   const url = `${horizons_main}?` +
     `format=text` +
     `&command=${req.body}` +
@@ -45,7 +46,7 @@ export async function vectors(req: { center: string; body: string; start: Date; 
   const hash = crypto.createHash('md5');
   hash.update(url);
   const digest = hash.digest().toString('hex');
-  console.log(digest, url);
+  if (opt.verbose) console.log(digest, url);
   let raw: string;
 
   try {
