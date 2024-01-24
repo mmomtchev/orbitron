@@ -71,7 +71,15 @@ async function draw(coordsToPixels: ProjFn,
         new Magick.DrawableLine(...origin, ...shadow)
       ]);
     }
-    await background.pixelColorAsync(...origin, body.color);
+    if (idx > 0) {
+      const prevPosition = body.trajectory[idx - 1];
+      await background.drawAsync([
+        conf.drawFillTransparent,
+        body.stroke,
+        new Magick.DrawableLine(...origin,
+          ...coordsToPixels(prevPosition.data.X, prevPosition.data.Y, prevPosition.data.Z)[0])
+      ]);
+    }
   }
 
   drawList.push(...[
@@ -89,6 +97,8 @@ async function draw(coordsToPixels: ProjFn,
 async function legend(image: Magick.Image, conf: Settings, bodies: Body[]) {
   const drawList: Magick.DrawableBase[] = [];
 
+  const maxLen = bodies.reduce((a, x) => Math.max(a, x.name.length), 0);
+
   let height = conf.lineSize;
   for (const body of bodies) {
     drawList.push(...[
@@ -96,7 +106,7 @@ async function legend(image: Magick.Image, conf: Settings, bodies: Body[]) {
       conf.drawPointSize,
       conf.drawStrokeTransparent,
       body.fill,
-      new Magick.DrawableText(conf.opts.width - conf.pointSize * 1.5, height, `${body.name}`)
+      new Magick.DrawableText(conf.opts.width - conf.pointSize * (maxLen + 2) / 6, height, `${body.name}`)
     ]);
     height += conf.lineSize;
   }
