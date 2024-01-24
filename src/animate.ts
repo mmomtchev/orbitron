@@ -98,7 +98,6 @@ async function legend(image: Magick.Image, conf: Settings, bodies: Body[]) {
   const drawList: Magick.DrawableBase[] = [];
 
   const maxLen = bodies.reduce((a, x) => Math.max(a, x.name.length), 0);
-  console.log('maxLen', maxLen);
 
   let height = conf.lineSize;
   for (const body of bodies) {

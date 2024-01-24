@@ -62,16 +62,18 @@ This is in fact the somewhat controversial object `J002E3` that was (re-)discove
 * Animate the JWST around the SEMB L2 (Sun & Earth-Moon Barycenter Lagrange 2) point
 
 ```shell
-$ orbitron animate --start 2021-12-26 --stop 2024-01-01 \
-  --days 1 --legend --proj lin --origin @32 \
+$ orbitron animate --start 2021-12-26 --stop 2024-01-01         \
+  --days 1 --legend --proj isolin --origin @32 --body @32=red   \
   --body earth --body moon --body -170=green --out jwst.mp4
 ```
+
+This is called a halo orbit and it is a result from a complex interaction between the two gravitational fields (the Sun and the Earth-Moon system) and the Coriolis force.
 
 * Animate the Korean spacecraft Danuri (low-energy Moon transfer) around the Earth:
 
 ```shell
-$ orbitron animate --start 2022-08-05 --stop 2023-01-01 \
-  --days 1 --legend --proj lin --origin earth \
+$ orbitron animate --start 2022-08-05 --stop 2023-01-01             \
+  --days 1 --legend --proj isolin --origin earth --body @31=yellow  \
   --body earth --body moon --body -155=green --out danuri.mp4
 ```
 
