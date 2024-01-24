@@ -107,3 +107,16 @@ $ orbitron animate --start 2022-08-05 --stop 2023-01-01             \
 
 * Second phase of the Voyager 1 mission
 ![Voyager 1 part 2](https://imgur.com/ctE6vUI.gif)
+
+* JWST
+JWST (in green), viewed from Earth (blue) orbiting around L2 (in red)
+![JWST from Earth](https://imgur.com/An6ns9a.gif)
+
+JWST (in green) viewed from L2 (in red), with Earth (in blue) and Moon (in white), isometric 3D view from 45° north
+![JWST 3D](https://imgur.com/AVVfzB3.gif)
+
+JWST (in green) viewed from L2 (in red), with Earth (in blue) and Moon (in white), 2D top down view from the north
+![JWST 2D topdown](https://imgur.com/qsHz4NJ.gif)
+
+JWST (in green) viewed from L2 (in red), with Earth (in blue) and Moon (in white), 2D side view from the the plane of the ecliptic
+![JWST 2D side](https://imgur.com/bPcVk5u.gif)
