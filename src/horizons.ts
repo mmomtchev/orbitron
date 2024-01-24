@@ -10,6 +10,7 @@ const horizons_main = `${horizons_endpoint}/horizons.api`;
 export interface LookupItem {
   name: string;
   spkid: number;
+  alias?: string[];
 };
 
 export interface LookupResult {

@@ -68,7 +68,7 @@ program
     .then((r) => {
       if (r.result?.length) {
         for (const b of r.result) {
-          console.log(`${b.name}\n\t\t${b.spkid}`);
+          console.log(`${b.name} ${b.alias.join(', ')}\n\t\t${b.spkid}`);
         }
       } else {
         console.log('None found');
