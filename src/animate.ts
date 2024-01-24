@@ -166,7 +166,6 @@ export async function animate(opts: Options) {
   // Create the frames one by one
   let frameIdx = 0;
   async function genFrame() {
-    console.log('genFrame');
     let more: boolean;
     let time = 0;
     do {
@@ -180,7 +179,6 @@ export async function animate(opts: Options) {
       frameIdx++;
       process.stdout.write(`Frame ${frameIdx} of ${totalFrames}, fps ${(frameIdx / time).toPrecision(3)}\r`);
     } while (more && frameIdx < totalFrames);
-    console.log('genFrame end loop');
 
     if (frameIdx < totalFrames) {
       video.drain(genFrame);
