@@ -47,6 +47,16 @@ $ orbitron animate --start 1980-01-01 --stop 2024-01-01    \
 
 At the end of the animation, it will be moving right towards you - it is leaving the Solar System in a highly inclined trajectory about 45° from the north.
 
+If you want to produce a GIF file instead, you can use `--out voyager1.gif --format gif`. To match the style of the Wikipedia articles, you can use:
+
+```shell
+$ orbitron animate --start 1977-09-06 --stop 1982-01-01           \
+  --out voyager.gif --format gif --days 5                         \
+  --font Arial --font-size 12 --date top --width 320 --height 200 \
+  --proj lin --origin sun --body -31=green                        \
+  --body sun --body earth --body mars --body jupiter --body saturn
+```
+
 ### Fun things to try
 
 * Animate the Apollo-12 S-IVB stage (yes, it is still there) with the Earth as center of the animation:

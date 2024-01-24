@@ -1,11 +1,11 @@
-import { Magick, MagickCore } from 'magickwand.js';
 import ffmpeg from '@mmomtchev/ffmpeg';
-import { Muxer, VideoEncoder, VideoTransform } from '@mmomtchev/ffmpeg/stream';
+import { Magick, MagickCore } from 'magickwand.js';
 
 import * as Horizons from './horizons';
 import { ProjFn, getProjectionFunction } from './projection';
 import { Options } from './options';
 import major from './major-bodies';
+import { encoder } from './encode';
 
 interface Settings {
   opts: Options;
@@ -152,27 +152,8 @@ export async function animate(opts: Options) {
   };
 
   // Create the video
-  ffmpeg.setLogLevel(opts.verbose ? ffmpeg.AV_LOG_VERBOSE : ffmpeg.AV_LOG_ERROR);
-  const formatIn = new ffmpeg.PixelFormat(ffmpeg.AV_PIX_FMT_RGBA);
-  const formatOut = new ffmpeg.PixelFormat(ffmpeg.AV_PIX_FMT_YUV420P);
-  const timeBase = new ffmpeg.Rational(1, opts.fps);
-  const videoOutput = new VideoEncoder({
-    type: 'Video',
-    codec: ffmpeg.AV_CODEC_H265,
-    bitRate: opts.br,
-    width: opts.width,
-    height: opts.height,
-    frameRate: new ffmpeg.Rational(opts.fps, 1),
-    timeBase,
-    pixelFormat: formatOut
-  });
-  const videoRescaler = new VideoTransform({
-    input: { ...videoOutput.definition(), pixelFormat: formatIn },
-    output: videoOutput.definition(),
-    interpolation: ffmpeg.SWS_BILINEAR
-  });
-  const output = new Muxer({ outputFile: opts.file, streams: [videoOutput] });
   const totalFrames = ephem[0].trajectory.length;
+  const video = encoder(opts);
 
   // Create the background and the legend
   image.magick('rgba');
@@ -185,28 +166,29 @@ export async function animate(opts: Options) {
   // Create the frames one by one
   let frameIdx = 0;
   async function genFrame() {
-    let frame;
+    console.log('genFrame');
+    let more: boolean;
     let time = 0;
     do {
       const t0 = Date.now();
       const im = await draw(coordsToPixels, image, conf, ephem, frameIdx);
       const blob = new Magick.Blob;
       await im.writeAsync(blob);
-      frame = ffmpeg.VideoFrame.create(Buffer.from(blob.data()), formatIn, opts.width, opts.height);
-      frame.setTimeBase(timeBase);
-      frame.setPts(new ffmpeg.Timestamp(frameIdx, timeBase));
+      more = video.write(blob.data(), frameIdx);
       const t1 = Date.now();
       time += (t1 - t0) / 1000;
       frameIdx++;
       process.stdout.write(`Frame ${frameIdx} of ${totalFrames}, fps ${(frameIdx / time).toPrecision(3)}\r`);
-    } while (videoRescaler.write(frame, 'binary') && frameIdx < totalFrames);
+    } while (more && frameIdx < totalFrames);
+    console.log('genFrame end loop');
 
     if (frameIdx < totalFrames) {
-      videoRescaler.once('drain', genFrame);
+      video.drain(genFrame);
     } else {
-      videoRescaler.end();
+      video.end();
     }
   }
-  videoRescaler.pipe(videoOutput).pipe(output.video[0]);
+  
   genFrame();
+  video.start();
 }
