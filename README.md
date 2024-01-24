@@ -94,6 +94,7 @@ $ orbitron animate --start 2022-08-05 --stop 2023-01-01             \
 * `sqrt`: Square Root law, 2D, top-down view from the north, works best for the main 8 planets
 * `isolin`: Linear, isometric 3D view, 45° from the north, for highly inclined orbits around the inner planets
 * `isosqrt`: Square Root law, isometric 3D view, 45° from the north, for the whole solar system
+* `sidelin`: Linear, 2D, side view from the plane of the ecliptic, for highly inclined orbits around the inner planets
 
 ### Results
 

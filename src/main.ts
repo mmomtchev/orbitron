@@ -22,7 +22,8 @@ program
     '\tlog\tLogarithmic, 2D top-down view from the north, works best for huge differences in scale\n' +
     '\tsqrt\tSquare Root, 2D top-down view from the north, works best for the main 8 planets\n' +
     '\tisolin\tLinear, 3D isometric view (45° from the north), for highly inclined orbits\n' +
-    '\tisosqrt\tSquare Root, 3D isometric view (45° from the north), for the whole solar system\n',
+    '\tisosqrt\tSquare Root, 3D isometric view (45° from the north), for the whole solar system\n' +
+    '\tsidelin\tLinear, 2D, side view from the plane of the ecliptic, for highly inclined orbits around the inner planets\n',
     'isosqrt')
   .option('--out <file>', 'output file')
   .option('--width <number>', 'X-resolution of the output file', parseInteger, 1280)

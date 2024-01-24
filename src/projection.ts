@@ -1,5 +1,5 @@
 export type ProjFn = (x: number, y: number, z: number) => [[number, number], [number, number] | null];
-export type Proj = 'lin' | 'log' | 'sqrt' | 'isolin' | 'isosqrt';
+export type Proj = 'lin' | 'log' | 'sqrt' | 'isolin' | 'isosqrt' | 'sidelin';
 
 export function getProjectionFunction(type: Proj, { width, height, max }: { width: number, height: number, max: number; }): ProjFn {
   switch (type) {
@@ -41,6 +41,11 @@ export function getProjectionFunction(type: Proj, { width, height, max }: { widt
           [Math.round(x * isoscale + width / 2), Math.round(height / 2 - y * isoscale * Math.SQRT1_2 - z * isoscale * Math.SQRT1_2)] as [number, number],
           [Math.round(x * isoscale + width / 2), Math.round(height / 2 - y * isoscale * Math.SQRT1_2)] as [number, number]
         ];
+      }
+    case 'sidelin':
+      {
+        const scale = Math.min(width - 2, height - 2) / max / 2;
+        return (x: number, y: number, z: number) => [[Math.round(x * scale + width / 2), Math.round(height / 2 - z * scale)] as [number, number], null];
       }
     case 'isosqrt':
       {
