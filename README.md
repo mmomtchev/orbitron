@@ -2,9 +2,11 @@
 
 `orbitron` is a tool for making orbital animations including spacecraft trajectories using the NASA/JPL Horizons API.
 
+It uses ideas from the unpublished ad-hoc tool by [Phoenix7777](https://commons.wikimedia.org/wiki/User:Phoenix7777) used for creating many of the illustrations on Wikipedia.
+
 ## Current project stage
 
-MEP (Mechanical, Electrical, Plumbing)
+Almost ready
 
 ## Usage
 

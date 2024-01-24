@@ -28,6 +28,16 @@ interface Body {
   trajectory: Horizons.EphemItem[];
 };
 
+/**
+ * The main drawing function, creates one frame from the given trajectories
+ * 
+ * @param coordsToPixels projection function
+ * @param background background image that is carried over, contains the orbital lines
+ * @param conf the configuration settings
+ * @param bodies the trajectories
+ * @param idx the frame index
+ * @returns the current frame
+ */
 async function draw(coordsToPixels: ProjFn,
   background: Magick.Image,
   conf: Settings,
@@ -54,6 +64,13 @@ async function draw(coordsToPixels: ProjFn,
         body.stroke,
         new Magick.DrawableLine(...origin, ...shadow)
       ]);
+      if (conf.opts.shadowLines && (idx % conf.opts.shadowLines === 0)) {
+        await background.drawAsync([
+          conf.drawFillTransparent,
+          body.stroke,
+          new Magick.DrawableLine(...origin, ...shadow)
+        ]);
+      }
     }
     if (idx > 0) {
       const prevPosition = body.trajectory[idx - 1];
@@ -81,6 +98,13 @@ async function draw(coordsToPixels: ProjFn,
   return image;
 }
 
+/**
+ * Draw the legend
+ * 
+ * @param image the background image
+ * @param conf the configuration settings
+ * @param bodies the bodies and their trajectories
+ */
 async function legend(image: Magick.Image, conf: Settings, bodies: Body[]) {
   const drawList: Magick.DrawableBase[] = [];
 
@@ -100,6 +124,11 @@ async function legend(image: Magick.Image, conf: Settings, bodies: Body[]) {
   await image.drawAsync(drawList);
 }
 
+/**
+ * Main entry point, called by 'animate' from the command line
+ * 
+ * @param opts the command-line options
+ */
 export async function animate(opts: Options) {
   if (opts.verbose) console.log(opts);
 
@@ -138,11 +167,12 @@ export async function animate(opts: Options) {
 
   const image = new Magick.Image(`${opts.width}x${opts.height}`, 'black');
   const pointSize = opts.pointSize || (opts.width / 16 / 6);
+  const bodySize = opts.bodySize || Math.round(Math.min(opts.width, opts.height) / 400) || 1;
   const conf: Settings = {
     opts,
     pointSize,
     lineSize: pointSize * 2,
-    bodySize: Math.round(Math.min(opts.width, opts.height) / 400) || 1,
+    bodySize,
     drawStrokeTransparent: new Magick.DrawableStrokeColor('transparent'),
     drawFillTransparent: new Magick.DrawableStrokeColor('transparent'),
     drawWhite: new Magick.DrawableFillColor('white'),
@@ -185,7 +215,7 @@ export async function animate(opts: Options) {
       video.end();
     }
   }
-  
+
   genFrame();
   video.start();
 }

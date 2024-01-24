@@ -15,6 +15,8 @@ export interface Options {
   legend: boolean;
   font: string;
   pointSize: number;
+  bodySize: number;
+  shadowLines: number;
   date: 'bottom' | 'top' | 'off';
   format: 'mp4' | 'gif';
   verbose: boolean | undefined;

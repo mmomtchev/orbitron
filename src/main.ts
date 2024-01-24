@@ -35,6 +35,8 @@ program
   .option('--legend', 'include a legend', false)
   .option('--font <string>', 'font to use', 'Bitstream Charter')
   .option('--font-size <number>', 'font size', parseInteger, 0)
+  .option('--body-size <number>', 'body size in pixels', parseInteger, 0)
+  .option('--shadow-lines <number>', 'when using isometric 3D, place a shadow line every <number> frames', parseInteger, 50)
   .option('--date <bottom | top | off>', 'show the date', 'bottom')
   .option('--format <mp4 | gif>', 'output format', 'mp4')
   .option('--verbose', 'debug output', false)
@@ -66,6 +68,8 @@ program
       legend: options.legend,
       font: options.font,
       pointSize: options.fontSize,
+      bodySize: options.bodySize,
+      shadowLines: options.shadowLines,
       date: options.date,
       format: options.format,
       verbose: options.verbose
