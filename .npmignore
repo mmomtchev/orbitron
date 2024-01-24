@@ -1,0 +1,7 @@
+.github
+.git
+.vscode
+/node_modules
+/cache
+*.mp4
+*.gif
