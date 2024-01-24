@@ -54,6 +54,9 @@ export async function vectors(req: { center: string; body: string; start: Date; 
     console.log('retrieved from cache', digest);
   } catch {
     raw = await fetch(url).then((r) => r.text());
+    if (!raw.includes('$$SOE')) {
+      throw new Error(`Horizons API returned ${raw}`);
+    }
     console.log('retrieved from server');
     await fs.mkdir(path.resolve(__dirname, '..', 'cache'), { recursive: true });
     await fs.writeFile(path.resolve(__dirname, '..', 'cache', `${digest}.txt`), raw, 'utf-8');

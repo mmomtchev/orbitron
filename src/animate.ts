@@ -138,7 +138,6 @@ export async function animate(opts: Options) {
 
   const image = new Magick.Image(`${opts.width}x${opts.height}`, 'black');
   const pointSize = opts.pointSize || (opts.width / 16 / 6);
-  Magick.TypeMetric;
   const conf: Settings = {
     opts,
     pointSize,
