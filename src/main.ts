@@ -1,4 +1,4 @@
-#!/usr/bin/node
+#!/usr/bin/env node
 
 import { program } from 'commander';
 import { lookup } from './horizons';
