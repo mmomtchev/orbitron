@@ -1,3 +1,5 @@
+#!/usr/bin/node
+
 import { program } from 'commander';
 import { lookup } from './horizons';
 import { animate } from './animate';
