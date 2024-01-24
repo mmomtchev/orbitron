@@ -4,11 +4,25 @@
 
 It uses ideas from the unpublished ad-hoc tool by [Phoenix7777](https://commons.wikimedia.org/wiki/User:Phoenix7777) used for creating many of the illustrations on Wikipedia.
 
-## Current project stage
-
-Almost ready
 
 ## Usage
+
+Install from `npm`:
+
+```shell
+$ npm install -g @mmomtchev/orbitron
+....
+$ orbitron
+Usage: orbitron [options] [command]
+
+Options:
+  -h, --help         display help for command
+
+Commands:
+  animate [options]  Generate orbital animations using NASA/JPL Horizons API
+  lookup <string>    Lookup bodies in the Horizons database
+  help [command]     display help for command
+```
 
 ### Lookup the spacecraft you need
 

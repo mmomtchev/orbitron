@@ -1,5 +1,5 @@
 {
-  "name": "orbitron",
+  "name": "@mmomtchev/orbitron",
   "version": "1.0.0",
   "description": "Generator of orbital animations using NASA/JPL Horizons API",
   "main": "index.js",

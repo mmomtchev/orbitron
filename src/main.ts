@@ -10,6 +10,7 @@ function parseInteger(value: string) {
 }
 
 program
+  .name('orbitron')
   .command('animate')
   .description('Generate orbital animations using NASA/JPL Horizons API')
   .option('--start <date>', 'starting date')
