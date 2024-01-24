@@ -126,6 +126,10 @@ This tool retrieves automatically data from the public NASA/JPL Horizons API. Al
 
 You are the sole owner of the images and the videos you create.
 
+## Trivia
+
+This tool was at the center of a number of heated discussions on the [Space Exploration Stack Exhange](https://space.stackexchange.com/questions/65102/how-were-wikipedias-orbital-simulations-made/65116) ([#2](https://imgur.com/a/cxcE54l)) related to the affair on my main profile page in which Stack Exchange is becoming major actor.
+
 ## Results
 
 
