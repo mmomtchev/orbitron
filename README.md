@@ -49,7 +49,7 @@ At the end of the animation, it will be moving right towards you - it is leaving
 
 ### Fun things to try
 
-Animate the Apollo-12 S-IVB stage (yes, it is still there) with the Earth as center of the animation:
+* Animate the Apollo-12 S-IVB stage (yes, it is still there) with the Earth as center of the animation:
 ```shell
 $ orbitron animate --start 2003-03-01 --stop 2003-09-01    \
   --out apollo-11-s4b.mp4 --days 1 --legend                \
@@ -58,6 +58,22 @@ $ orbitron animate --start 2003-03-01 --stop 2003-09-01    \
 ```
 
 This is in fact the somewhat controversial object `J002E3` that was (re-)discoverd in September 2002 and initially got assigned an asteroid designation, but it is now believed to be in fact the S-IVB stage of the Apollo 12 mission. It is in a highly unstable orbit and it is re-captured by the Earth once every 40 years. In this animation you can see it perform an almost perfect natural gravitational sling-shot around the Moon before being ejected once again in a heliocentric orbit.
+
+* Animate the JWST around the SEMB L2 (Sun & Earth-Moon Barycenter Lagrange 2) point
+
+```shell
+$ orbitron animate --start 2021-12-26 --stop 2024-01-01 \
+  --days 1 --legend --proj lin --origin @32 \
+  --body earth --body moon --body -170=green --out jwst.mp4
+```
+
+* Animate the Korean spacecraft Danuri (low-energy Moon transfer) around the Earth:
+
+```shell
+$ orbitron animate --start 2022-08-05 --stop 2023-01-01 \
+  --days 1 --legend --proj lin --origin earth \
+  --body earth --body moon --body -155=green --out danuri.mp4
+```
 
 ### Supported projections
 
