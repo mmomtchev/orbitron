@@ -142,7 +142,9 @@ You are the sole owner of the images and the videos you create.
 
 ## Trivia
 
-This tool was at the center of a number of heated discussions on the [Space Exploration Stack Exhange](https://space.stackexchange.com/questions/65102/how-were-wikipedias-orbital-simulations-made/65116) related to the affair on my main profile page in which Stack Exchange is becoming major actor. After deleting my previous post ([#2](https://imgur.com/a/cxcE54l)) they decided to suspend my account on the basis of this answer - because my account [*exists only to promote my product or my website*](https://imgur.com/a/HLiMB0R) - [this is the answer that got me suspended](https://imgur.com/a/QN94s0L) *(and not because they have something to do with the rest of this affair!!!)*
+My account on the Space Exploration Stack Exchange was suspended after posting this tool as an answer to this [question](https://space.stackexchange.com/questions/65102/how-were-wikipedias-orbital-simulations-made/65116) and my [answer](https://imgur.com/a/QN94s0L) was deleted [twice](https://imgur.com/a/cxcE54l) because because my account [exists only to promote my ***product*** or my ***website***](https://imgur.com/a/HLiMB0R).
+
+(*yes, obviously there is backstory to it: the moderators' team at StackOverflow is heavily implicated in the affair mentioned on my homepage and given their personalities, the nature of the extortion and my willingness to remind this, the situation with everything I do is always very volatile*).
 
 ## Results
 
