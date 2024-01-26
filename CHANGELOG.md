@@ -1,6 +1,7 @@
 ## 1.1
 
 * Accurately place the legend text, no matter its length
+* Support lookup of comets and asteroids
 
 ### 1.0.1 2024-01-24
 
