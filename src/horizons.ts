@@ -29,8 +29,8 @@ export interface EphemItem {
   data: Record<string, number>;
 };
 
-export async function lookup(s: string) {
-  const r = await fetch(`${horizons_lookup}?group=pln&sstr=${s}`)
+export async function lookup(s: string, opts?: { all?: boolean; }) {
+  const r = await fetch(`${horizons_lookup}?${opts.all ? '' : 'group=pln&'}sstr=${s}`)
     .then((r) => r.json());
   return r as LookupResult;
 }
@@ -38,7 +38,7 @@ export async function lookup(s: string) {
 export async function vectors(req: { center: string; body: string; start: Date; stop: Date; step: string; }, opt: Options) {
   const url = `${horizons_main}?` +
     `format=text` +
-    `&command=${req.body}` +
+    `&command='${req.body}'` +
     `&obj_data=no&ephem_type=vectors&vec_table=1` +
     `&center=${req.center}` +
     `&step_size=${req.step}` +

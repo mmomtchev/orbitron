@@ -82,8 +82,9 @@ program
 program
   .command('lookup')
   .description('Lookup bodies in the Horizons database')
+  .option('--all', 'include all bodies and not just planets and spacecraft')
   .argument('<string>')
-  .action((s) => lookup(s)
+  .action((s, options) => lookup(s, options)
     .then((r) => {
       if (r.result?.length) {
         for (const b of r.result) {
