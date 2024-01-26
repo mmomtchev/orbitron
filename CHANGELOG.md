@@ -2,6 +2,7 @@
 
 * Accurately place the legend text, no matter its length
 * Support lookup of comets and asteroids
+* Fix a console error w/o any consequences when installing on Windows
 
 ### 1.0.1 2024-01-24
 

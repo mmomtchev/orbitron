@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "prepare": "npx tsc",
-    "prepublish": "chmod a+x ./dist/main.js"
+    "prepublishOnly": "chmod a+x ./dist/main.js"
   },
   "bin": {
     "orbitron": "./dist/main.js"
