@@ -108,7 +108,8 @@ async function draw(coordsToPixels: ProjFn,
 async function legend(image: Magick.Image, conf: Settings, bodies: Body[]) {
   const drawList: Magick.DrawableBase[] = [];
 
-  const maxLen = bodies.reduce((a, x) => Math.max(a, x.name.length), 0);
+  const maxLen = bodies.reduce((a, x) => x.name.length > a.length ? x.name : a, '');
+  const width = (await image.fontTypeMetricsAsync(maxLen)).textWidth();
 
   let height = conf.lineSize;
   for (const body of bodies) {
@@ -117,7 +118,7 @@ async function legend(image: Magick.Image, conf: Settings, bodies: Body[]) {
       conf.drawPointSize,
       conf.drawStrokeTransparent,
       body.fill,
-      new Magick.DrawableText(conf.opts.width - conf.pointSize * maxLen, height, `${body.name}`)
+      new Magick.DrawableText(Math.round(conf.opts.width - width * 1.2), height, `${body.name}`)
     ]);
     height += conf.lineSize;
   }
@@ -167,11 +168,16 @@ export async function animate(opts: Options) {
 
   const image = new Magick.Image(`${opts.width}x${opts.height}`, 'black');
   const pointSize = opts.pointSize || (opts.width / 16 / 6);
+  image.fontPointsize(pointSize);
+  image.fontFamily(opts.font);
+  image.fontStyle(MagickCore.NormalStyle);
+  image.fontWeight(400);
+  const metrics = image.fontTypeMetrics('YYYY-MM-DD');
   const bodySize = opts.bodySize || Math.round(Math.min(opts.width, opts.height) / 400) || 1;
   const conf: Settings = {
     opts,
     pointSize,
-    lineSize: pointSize * 2,
+    lineSize: Math.round(metrics.textHeight() * 1.5),
     bodySize,
     drawStrokeTransparent: new Magick.DrawableStrokeColor('transparent'),
     drawFillTransparent: new Magick.DrawableStrokeColor('transparent'),
