@@ -1,0 +1,26 @@
+name: Orbitron CI
+
+on:
+  workflow_dispatch:
+  push:
+    branches: main
+  pull_request:
+    branches: main
+
+jobs:
+  voyager1:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm ci
+      - name: Install fonts on Ubuntu
+        run: sudo apt-get install -y fonts-ubuntu
+      - name: animate
+        run: |
+          node dist/main.js animate \
+            --start 1977-09-06 --stop 1982-01-01                \
+            --out voyager1-part1.mp4 --days 1 --legend          \
+            --proj lin --origin sun --body -31=green            \
+            --body sun --body mercury --body venus --body earth \
+            --body mars --body jupiter --body saturn
