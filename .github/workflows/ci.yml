@@ -1,0 +1,23 @@
+name: Orbitron CI
+
+on:
+  push:
+    branches: main
+  pull_request:
+    branches: main
+
+jobs:
+  voyager1:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - run: npm ci
+      - name: animate
+        run: |
+          node dist/main.js \
+            --start 1977-09-06 --stop 1982-01-01                \
+            --out voyager1-part1.mp4 --days 1 --legend          \
+            --proj lin --origin sun --body -31=green            \
+            --body sun --body mercury --body venus --body earth \
+            --body mars --body jupiter --body saturn

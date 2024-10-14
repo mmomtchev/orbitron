@@ -1,5 +1,5 @@
 import ffmpeg from '@mmomtchev/ffmpeg';
-import { Magick, MagickCore } from 'magickwand.js';
+import { Magick, MagickCore } from 'magickwand.js/native';
 
 import * as Horizons from './horizons';
 import { ProjFn, getProjectionFunction } from './projection';
