@@ -16,7 +16,7 @@ jobs:
       - run: npm ci
       - name: animate
         run: |
-          node dist/main.js \
+          node dist/main.js animate \
             --start 1977-09-06 --stop 1982-01-01                \
             --out voyager1-part1.mp4 --days 1 --legend          \
             --proj lin --origin sun --body -31=green            \
