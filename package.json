@@ -31,7 +31,7 @@
   "dependencies": {
     "@lunisolar/julian": "^0.7.1",
     "@mmomtchev/ffmpeg": "^1.0.0",
-    "commander": "^13.0.0",
+    "commander": "^14.0.0",
     "magickwand.js": "^2.0.0"
   },
   "devDependencies": {
