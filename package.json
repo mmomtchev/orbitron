@@ -30,7 +30,7 @@
   "homepage": "https://github.com/mmomtchev/orbitron#readme",
   "dependencies": {
     "@lunisolar/julian": "^0.7.1",
-    "@mmomtchev/ffmpeg": "^1.0.0",
+    "@mmomtchev/ffmpeg": "^2.0.0",
     "@types/node": "^24.2.0",
     "commander": "^14.0.0",
     "magickwand.js": "^2.0.0"
