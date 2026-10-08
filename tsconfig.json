@@ -1,8 +1,16 @@
 {
   "compilerOptions": {
+    "module": "node16",
+    "moduleResolution": "node16",
+    "target": "es2020",
     "outDir": "dist",
-    "downlevelIteration": true,
-    "esModuleInterop": true
+    "rootDir": "./src",
+    "esModuleInterop": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "types": [
+      "node"
+    ]
   },
   "include": [
     "src"

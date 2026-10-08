@@ -30,7 +30,7 @@ export interface EphemItem {
 };
 
 export async function lookup(s: string, opts?: { all?: boolean; }) {
-  const r = await fetch(`${horizons_lookup}?${opts.all ? '' : 'group=pln&'}sstr=${s}`)
+  const r = await fetch(`${horizons_lookup}?${opts?.all ? '' : 'group=pln&'}sstr=${s}`)
     .then((r) => r.json());
   return r as LookupResult;
 }
