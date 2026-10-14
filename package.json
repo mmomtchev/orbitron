@@ -32,7 +32,7 @@
     "@lunisolar/julian": "^0.7.1",
     "@mmomtchev/ffmpeg": "^2.0.1",
     "@types/node": "^26.6.4",
-    "commander": "^14.0.0",
+    "commander": "^15.0.0",
     "magickwand.js": "^2.0.0"
   },
   "devDependencies": {
